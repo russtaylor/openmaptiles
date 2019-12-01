@@ -1,6 +1,37 @@
 ## OpenMapTiles [![Build Status](https://github.com/openmaptiles/openmaptiles/workflows/OpenMapTiles%20Integrity%20CI/badge.svg?branch=master)](https://github.com/openmaptiles/openmaptiles/actions)
 
-OpenMapTiles is an extensible and open tile schema based on the OpenStreetMap. This project is used to generate vector tiles for online zoomable maps. OpenMapTiles is about creating a beautiful basemaps with general layers containing topographic information. More information [openmaptiles.org](https://openmaptiles.org/) and [maptiler.com/data/](https://www.maptiler.com/data/).
+OpenMapTiles is an extensible and open tile schema based on the OpenStreetMap. This project is used to generate vector tiles for online zoomable maps. OpenMapTiles is about creating a beautiful basemaps with general layers containing topographic information. More information [openmaptiles.org](https://openmaptiles.org/) and [openmaptiles.com](https://openmaptiles.com/).
+
+## Fork Overview
+
+I plan to use OpenMapTiles with a custom style for NST Guide. I still haven't figured out how to change the generated zooms. Otherwise, the general overview is:
+
+```bash
+git clone https://github.com/nst-guide/openmaptiles.git
+cd ./openmaptiles
+# Download all necessary OpenMapTiles programs
+docker-compose pull
+# Download and import Geofabrik extracts
+./quickstart washington
+mv data/tiles.mbtiles ./washington.mbtiles
+./quickstart oregon
+mv data/tiles.mbtiles ./oregon.mbtiles
+./quickstart california
+mv data/tiles.mbtiles ./california.mbtiles
+# Join the separate mbtiles into one
+# tile-join comes from tippecanoe
+# https://github.com/mapbox/tippecanoe
+tile-join -o joined.mbtiles washington.mbtiles oregon.mbtiles california.mbtiles
+# Export the mbtiles into a directory
+# https://github.com/mapbox/mbutil
+mb-util joined.mbtiles tiles
+# Upload the directory of tiles to S3
+aws s3 cp tiles s3://tiles.nst.guide/{directory}/ --recursive --content-type application/x-protobuf --content-encoding 'gzip'
+```
+
+## OpenMapTiles Overview
+
+OpenMapTiles is an extensible and open tile schema based on the OpenStreetMap. This project is used to generate vector tiles for online zoomable maps. OpenMapTiles is about creating a beautiful basemaps with general layers containing topographic information. More information [openmaptiles.org](https://openmaptiles.org/) and [openmaptiles.com](https://openmaptiles.com/).
 
 We encourage you to collaborate, reuse and adapt existing layers, or add your own layers. You may use our approach for your own vector tile project. Feel free to fork the repo and experiment. The repository is built on top of the [openmaptiles/openmaptiles-tools](https://github.com/openmaptiles/openmaptiles-tools) to simplify vector tile creation.
 
@@ -147,9 +178,9 @@ make
 make import-sql
 ```
 
-Each time you make a modification that adds a new feature to vector tiles e.g. adding new OSM tags, modify the layer 
+Each time you make a modification that adds a new feature to vector tiles e.g. adding new OSM tags, modify the layer
 style snippet by adding new style layer so the changes are propagated visually into the style.
-All new style layers must have the `order` value which determines the order or rendering in the map style. 
+All new style layers must have the `order` value which determines the order or rendering in the map style.
 After the layer style snippet is modified run:
 ```bash
 make build-style
@@ -174,7 +205,7 @@ make import-data            # Import external data from OpenStreetMapData, Natur
 make download area=albania  # download albania .osm.pbf file -- can be skipped if a .osm.pbf file already existing
 make import-osm             # import data into postgres
 make import-wikidata        # import Wikidata
-make import-sql             # create / import sql functions 
+make import-sql             # create / import sql functions
 make generate-bbox-file     # compute data bbox -- not needed for the whole planet or for downloaded area by `make download`
 make generate-tiles-pg      # generate tiles
 ```
