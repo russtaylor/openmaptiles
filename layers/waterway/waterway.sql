@@ -278,7 +278,7 @@ SELECT geometry,
        is_tunnel,
        is_intermittent
 FROM osm_waterway_linestring
-WHERE waterway IN ('river', 'canal')
+WHERE waterway IN ('river', 'canal', 'stream')
     );
 
 -- etldoc: osm_waterway_linestring ->  waterway_z13
