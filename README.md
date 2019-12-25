@@ -76,11 +76,11 @@ There are a couple possible ways to do this.
     # Download all necessary OpenMapTiles programs
     docker-compose pull
     # Download and import Geofabrik extracts
-    ./quickstart washington
+    ./quickstart.sh washington
     mv data/tiles.mbtiles ./washington.mbtiles
-    ./quickstart oregon
+    ./quickstart.sh oregon
     mv data/tiles.mbtiles ./oregon.mbtiles
-    ./quickstart california
+    ./quickstart.sh california
     mv data/tiles.mbtiles ./california.mbtiles
     # Join the separate mbtiles into one
     # tile-join comes from tippecanoe
@@ -105,7 +105,7 @@ There are a couple possible ways to do this.
     # Download all necessary OpenMapTiles programs
     docker-compose pull
     # Run for washington
-    ./quickstart washington
+    ./quickstart.sh washington
     mb-util data/tiles.mbtiles washington
     aws s3 cp washington s3://{bucket_name}/openmaptiles/ \
         --recursive \
@@ -114,7 +114,7 @@ There are a couple possible ways to do this.
         --cache-control "public, max-age=2592000, stale-while-revalidate=31536000"
 
     # Run for oregon
-    ./quickstart oregon
+    ./quickstart.sh oregon
     mb-util data/tiles.mbtiles oregon
     aws s3 cp oregon s3://{bucket_name}/openmaptiles/ \
         --recursive \
@@ -123,7 +123,7 @@ There are a couple possible ways to do this.
         --cache-control "public, max-age=2592000, stale-while-revalidate=31536000"
 
     # Run for california
-    ./quickstart california
+    ./quickstart.sh california
     mb-util data/tiles.mbtiles california
     aws s3 cp california s3://{bucket_name}/openmaptiles/ \
         --recursive \
