@@ -25,10 +25,15 @@ tables:
     - name: wikipedia
       key: wikipedia
       type: string
+    - name: wikidata
+      key: wikidata
+      type: string
     mapping:
       natural:
       - peak
       - volcano
+      - spring
+      - saddle
       - saddle
 
   # etldoc: imposm3 -> osm_mountain_linestring
