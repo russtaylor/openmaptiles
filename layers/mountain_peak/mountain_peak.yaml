@@ -11,16 +11,18 @@ layer:
     name: The OSM [`name`](http://wiki.openstreetmap.org/wiki/Key:name) value of the peak. Language-specific values are in `name:xx`.
     name_en: English name `name:en` if available, otherwise `name`. This is deprecated and will be removed in a future release in favor of `name:en`.
     name_de: German name `name:de` if available, otherwise `name` or `name:en`. This is deprecated and will be removed in a future release in favor of `name:de`.
+    wikidata: Wikidata entry
     class:
       description: |
-        Use the **class** to differentiate between natural objects.
+        Use the **class** to differentiate between mountain peak, volcano, spring, and saddle.
       values:
-      - peak
-      - volcano
-      - saddle
-      - ridge
-      - cliff
-      - arete
+        - peak
+        - volcano
+        - saddle
+        - ridge
+        - cliff
+        - arete
+        - spring
     ele: Elevation (`ele`) in meters.
     ele_ft: Elevation (`ele`) in feet.
     customary_ft:
@@ -35,7 +37,7 @@ layer:
     key_field: osm_id
     key_field_as_attribute: no
     srid: 900913
-    query: (SELECT osm_id, geometry, name, name_en, name_de, {name_languages}, class, ele, ele_ft, customary_ft, rank FROM layer_mountain_peak(!bbox!, z(!scale_denominator!), !pixel_width!)) AS t
+    query: (SELECT osm_id, geometry, name, wikidata, class, ele, customary_ft, rank FROM layer_mountain_peak(!bbox!, z(!scale_denominator!), !pixel_width!)) AS t
 schema:
   - ./update_peak_point.sql
   - ./update_mountain_linestring.sql
