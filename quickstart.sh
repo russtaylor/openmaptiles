@@ -131,7 +131,7 @@ echo "      : Started          : $STARTDATE "
 echo "      : Your bash version: $BASH_VERSION"
 echo "      : Your OS          : $OSTYPE"
 docker         --version
-docker_compose_command --version
+# docker_compose_command --version
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     echo " "
